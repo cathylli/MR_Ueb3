@@ -8,6 +8,16 @@
   <!--Aframe-->
   <script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@v7.4.0/dist/aframe-extras.min.js"></script>
+  <script>
+  AFRAME.registerComponent('axis-helper', {
+    schema: { size: { default: 1 } },
+    init: function () {
+      const size = this.data.size;
+      const axisHelper = new THREE.AxesHelper(size);
+      this.el.object3D.add(axisHelper);
+    }
+  });
+  </script>
 
 </head>
 <body>
@@ -20,6 +30,7 @@
     <a-assets>
       <img id="puresky" src="textures/qwantani_dusk_2_puresky_4k.jpg"> <!--https://polyhaven.com/hdris/skies-->
       <img id="stars-sky" src="textures/Texturelabs_Sky_143M.jpg"> <!--https://texturelabs.org/textures/sky_143/-->
+      <img id="dark-sky" src="textures/rogland_clear_night_4k.jpg"> <!--https://polyhaven.com/a/rogland_clear_night-->
       <img id="sand-normal" src="textures/sandboden/Ground096C_4K-JPG_NormalDX.jpg"> <!--https://ambientcg.com/list?type=material%2Catlas%2Cdecal&q=+sand&sort=popular-->
       <img id="brick" src="textures/brick_mat.jpg">
       <img id="rock" src="textures/floor/textures/rocky_terrain_02_disp_4k.png">
@@ -28,6 +39,7 @@
       <a-asset-item id="ballons" src="Assets/Ballons/scene.gltf"></a-asset-item> <!--https://www.fab.com/listings/4798c224-e316-4cc8-8157-771fdb302274-->
       <a-asset-item id="firework" src="Assets/Firework/scene.gltf"></a-asset-item> <!--https://www.fab.com/listings/a2f35afb-10f8-4607-a3f0-1254037ba704-->
       <a-asset-item id="grass" src="Assets/Grass/scene.gltf"></a-asset-item> <!--https://www.fab.com/listings/de42da54-9196-4832-870d-577549132888-->
+      <a-asset-item id="streetlamp" src="Assets/Street_Lamp/scene.gltf"></a-asset-item> <!--https://www.fab.com/listings/df76ea61-d006-4f0a-a048-d3885db0a598-->
     </a-assets>
 
     <!--Licht-->
@@ -35,19 +47,22 @@
     <a-entity 
         light="type: ambient; intensity: 0.1">
     </a-entity>
+
     <!--directional-->
     <a-entity
         light="type: directional; color: #ffffff; intensity: 1; castShadow: true"
-        position="1 3 -2">
+        position="5 15 -10">
     </a-entity>
+
     <!--point-->
     <a-entity
         light="type: point; color: #ff0013; intensity: 5; distance: 5; castShadow: true"
         position="0 0.5 -3">
     </a-entity>
+    
 
     <!--Kamera-->
-    <a-entity camera position="0 1.6 0" wasd-controls look-controls></a-entity>
+    <a-entity camera position="0 1.8 0" wasd-controls look-controls></a-entity>
 
     <!--Plane--> <!--https://www.youtube.com/watch?v=XUwvKXPlnJY-->
     <a-plane 
@@ -86,7 +101,7 @@
     </a-cylinder>
 
     <!--Skybox-->
-    <a-sky src="#puresky" rotation="0 -130 0"></a-sky>
+    <a-sky src="#dark-sky" rotation="0 -130 0"></a-sky>
 
     <!-- GLTF-Assets -->
     <a-entity
@@ -103,12 +118,14 @@
       shadow="cast: true">
     </a-entity>
 
+    <!--
     <a-entity
       gltf-model="#firework"
       position="1 0.75 -3"
       scale="0.2 0.2 0.2"
       animation-mixer>
-    </a-entity>
+    </a-entity> 
+    -->
 
     <a-entity
       gltf-model="#grass"
@@ -116,6 +133,21 @@
       scale="1 1 1"
       shadow="cast: false">
     </a-entity>
+
+    <a-entity
+      gltf-model="#streetlamp"
+      position="5 -1.5 10"
+      scale="1 1 1"
+      shadow="cast: true">
+    </a-entity>
+
+    <a-entity
+        light="type: spot; color: #14ff00; intensity: 10; distance: 20; castShadow: true; angle: 60; penumbra: 0.5"
+        position="0 4 5"
+        rotation="-90 0 0">
+        <a-entity axis-helper="size: 2"></a-entity>
+    </a-entity>
+  
 
   </a-scene>
 </body>
