@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mixed Reality Übung 3</title>
+
+  <!--Aframe-->
+  <script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@v7.4.0/dist/aframe-extras.min.js"></script>
+
+</head>
+<body>
+  <a-scene 
+    renderer="shadowMap.enabled: true; shadowMap.type: pcfSoft; colorManagement: true"
+    xr-mode-ui="XRMode: xr"
+    webxr="requiredFeatures: local-floor; optionalFeatures: hit-test">
+
+    <!--Asset Management-->
+    <a-assets>
+      <img id="puresky" src="textures/qwantani_dusk_2_puresky_4k.jpg"> <!--https://polyhaven.com/hdris/skies-->
+      <img id="stars-sky" src="textures/Texturelabs_Sky_143M.jpg"> <!--https://texturelabs.org/textures/sky_143/-->
+      <img id="sand-normal" src="textures/sandboden/Ground096C_4K-JPG_NormalDX.jpg"> <!--https://ambientcg.com/list?type=material%2Catlas%2Cdecal&q=+sand&sort=popular-->
+      <img id="brick" src="textures/brick_mat.jpg">
+      <img id="rock" src="textures/floor/textures/rocky_terrain_02_disp_4k.png">
+      <img id="rock_diff" src="textures/floor/textures/rocky_terrain_02_diff_4k.jpg">
+      <a-asset-item id="kashipan" src="Assets/Kashipan/scene.gltf"></a-asset-item> <!--https://www.fab.com/listings/e4362ba9-71f7-4540-bbbd-d03370c44d07-->
+      <a-asset-item id="ballons" src="Assets/Ballons/scene.gltf"></a-asset-item> <!--https://www.fab.com/listings/4798c224-e316-4cc8-8157-771fdb302274-->
+      <a-asset-item id="firework" src="Assets/Firework/scene.gltf"></a-asset-item> <!--https://www.fab.com/listings/a2f35afb-10f8-4607-a3f0-1254037ba704-->
+      <a-asset-item id="grass" src="Assets/Grass/scene.gltf"></a-asset-item> <!--https://www.fab.com/listings/de42da54-9196-4832-870d-577549132888-->
+    </a-assets>
+
+    <!--Licht-->
+    <!--ambient-->
+    <a-entity 
+        light="type: ambient; intensity: 0.1">
+    </a-entity>
+    <!--directional-->
+    <a-entity
+        light="type: directional; color: #ffffff; intensity: 1; castShadow: true"
+        position="1 3 -2">
+    </a-entity>
+    <!--point-->
+    <a-entity
+        light="type: point; color: #ff0013; intensity: 5; distance: 5; castShadow: true"
+        position="0 0.5 -3">
+    </a-entity>
+
+    <!--Kamera-->
+    <a-entity camera position="0 1.6 0" wasd-controls look-controls></a-entity>
+
+    <!--Plane--> <!--https://www.youtube.com/watch?v=XUwvKXPlnJY-->
+    <a-plane 
+        src="textures/sandboden/Ground096C.png"
+        position="0 0 -4" 
+        rotation="-90 0 0" 
+        width="100" height="100" 
+        normal-map="#sand-normal"
+        normal-texture-repeat="1 1"
+        normal-scale="1 -1"
+        roughness="0.5"
+        shadow="receive: true">
+    </a-plane>
+
+    <!--Standardobjekte-->
+    <a-box 
+        position="-2 1 -1.5" 
+        rotation="0 45 0" 
+        src="textures/brick_mat.jpg"
+        shadow="cast: true"
+        animation="property: rotation; to: 0 360 0 ; loop: true; dur: 15000; easing: linear;">
+    </a-box>
+
+    <a-sphere 
+        position="0 1.25 -5" 
+        radius="1.25" 
+        src="#rock"
+        shadow="cast: true">
+    </a-sphere>
+
+    <a-cylinder 
+        position="1 0.75 -3" 
+        radius="0.5" height="1.5" 
+        color="#FFC65D" 
+        shadow="cast: true">
+    </a-cylinder>
+
+    <!--Skybox-->
+    <a-sky src="#puresky" rotation="0 -130 0"></a-sky>
+
+    <!-- GLTF-Assets -->
+    <a-entity
+      gltf-model="#kashipan"
+      position="0 0 -1"
+      scale="2 2 2"
+      shadow="cast: true">
+    </a-entity>
+
+    <a-entity
+      gltf-model="#ballons"
+      position="2 0 -5"
+      scale="0.05 0.05 0.05"
+      shadow="cast: true">
+    </a-entity>
+
+    <a-entity
+      gltf-model="#firework"
+      position="1 0.75 -3"
+      scale="0.2 0.2 0.2"
+      animation-mixer>
+    </a-entity>
+
+    <a-entity
+      gltf-model="#grass"
+      position="0 0 0"
+      scale="1 1 1"
+      shadow="cast: false">
+    </a-entity>
+
+  </a-scene>
+</body>
+</html>
